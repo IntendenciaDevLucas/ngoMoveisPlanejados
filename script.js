@@ -272,7 +272,15 @@
     { nome: 'Mármore travertino', cor: '#d8c6a8' },
     { nome: 'Cinza concreto', cor: '#8d8b87' }
   ];
-  const estudio = { porta: portas[0], bancada: bancadas[0], puxador: 'preto', led: true };
+  // tampo = nome do segundo material em cada ambiente; wizard = opção marcada no orçamento
+  const salas = {
+    cozinha: { nome: 'Cozinha', tampo: 'Bancada', wizard: 'Cozinha' },
+    quarto: { nome: 'Quarto', tampo: 'Tampo dos criados', wizard: 'Quarto' },
+    office: { nome: 'Home office', tampo: 'Tampo da mesa', wizard: 'Home office' },
+    banho: { nome: 'Banheiro', tampo: 'Bancada', wizard: 'Banheiro / Lavabo' },
+    sala: { nome: 'Sala de TV', tampo: 'Tampo do rack', wizard: 'Sala / Home theater' }
+  };
+  const estudio = { ambiente: 'cozinha', porta: portas[0], bancada: bancadas[0], puxador: 'preto', led: true };
   const puxadorNomes = { preto: 'Perfil preto', dourado: 'Dourado', cava: 'Cava (sem puxador)' };
 
   function makeSwatches(box, list, label, key) {
@@ -288,7 +296,7 @@
         $$('.sw', box).forEach(s => { s.classList.toggle('on', s === b); s.setAttribute('aria-pressed', s === b); });
         estudio[key] = item;
         label.textContent = item.nome;
-        drawKitchen();
+        draw();
       });
       box.appendChild(b);
     });
@@ -300,12 +308,22 @@
     $$('#segHandle button').forEach(x => x.classList.toggle('on', x === b));
     estudio.puxador = b.dataset.v;
     $('#lblHandle').textContent = puxadorNomes[b.dataset.v];
-    drawKitchen();
+    draw();
   }));
   $('#ledToggle').addEventListener('change', e => {
     estudio.led = e.target.checked;
-    $('#led').classList.toggle('off', !estudio.led);
+    $$('#kitchen .led').forEach(l => l.classList.toggle('off', !estudio.led));
   });
+  $$('#segRoom .chip').forEach(b => b.addEventListener('click', () => {
+    $$('#segRoom .chip').forEach(x => { x.classList.toggle('active', x === b); x.setAttribute('aria-pressed', x === b); });
+    estudio.ambiente = b.dataset.v;
+    $('#lblRoom').textContent = salas[b.dataset.v].nome;
+    $('#lblTopName').textContent = salas[b.dataset.v].tampo;
+    const stage = $('#kitchen');
+    if (reduceMotion) { draw(); return; }
+    stage.classList.add('swap');
+    setTimeout(() => { draw(); stage.classList.remove('swap'); }, 250);
+  }));
 
   const NS = 'http://www.w3.org/2000/svg';
   const el = (tag, attrs) => {
@@ -323,6 +341,7 @@
     g.appendChild(el('rect', { x: x + .5, y: y + .5, width: w - 1, height: h - 1, rx: 2, fill: 'none', stroke: '#000', 'stroke-opacity': .35 }));
 
     const pos = opts.handle || 'bottom';
+    if (pos === 'none') return;
     if (puxador === 'cava') {
       // rebaixo na borda da porta
       const cy = pos === 'top' ? y + 3 : pos === 'bottom' ? y + h - 9 : y + 3;
@@ -341,48 +360,172 @@
     }
   }
 
-  function drawKitchen() {
-    const upper = $('#upper'), lower = $('#lower'), tower = $('#tower');
-    [upper, lower, tower].forEach(g => g.replaceChildren());
+  // Peças de apoio usadas por todos os ambientes
+  const rect = (g, a) => g.appendChild(el('rect', a));
+  const painel = (g, x, y, w, h) => door(g, x, y, w, h, { handle: 'none' });
+  const slab = (g, x, y, w, h) => {
+    rect(g, { x, y, width: w, height: h, rx: 2, fill: estudio.bancada.cor });
+    rect(g, { x, y: y + h - 2, width: w, height: 2, fill: '#000', 'fill-opacity': .25 });
+  };
+  const luz = (g, x, y, w, h) => rect(g, { x, y, width: w, height: h, fill: 'url(#ledGlow)', class: 'led' + (estudio.led ? '' : ' off') });
+  const ripado = (g, x, y, w, h, passo) => {
+    for (let lx = x + passo; lx < x + w - 2; lx += passo)
+      g.appendChild(el('line', { x1: lx, y1: y + 2, x2: lx, y2: y + h - 2, stroke: '#000', 'stroke-opacity': .3, 'stroke-width': 1.5 }));
+  };
+  const plantinha = (g, x, y) => {
+    rect(g, { x: x - 9, y: y - 23, width: 18, height: 23, rx: 4, fill: '#d9d2c4' });
+    g.appendChild(el('path', { d: `M${x} ${y - 23} C ${x - 6} ${y - 40}, ${x - 13} ${y - 45}, ${x - 17} ${y - 53} M${x} ${y - 23} C ${x + 4} ${y - 41}, ${x + 13} ${y - 47}, ${x + 17} ${y - 55} M${x} ${y - 23} C ${x} ${y - 39}, ${x} ${y - 47}, ${x + 1} ${y - 59}`, stroke: '#7d8f6a', 'stroke-width': 2, fill: 'none' }));
+  };
+  const livros = (g, x, base, larg) => {
+    const cores = ['#6b4a36', '#b9a48c', '#3f4a3f', '#8a6d4b', '#d8cfc1', '#5a3b2c'];
+    let cx = x;
+    for (let k = 0; cx < x + larg - 8; k++) {
+      const w = 6 + (k * 7) % 5, h = 30 + (k * 13) % 16;
+      rect(g, { x: cx, y: base - h, width: w, height: h, fill: cores[k % cores.length] });
+      cx += w + 1;
+    }
+  };
 
-    // aéreos (deixa espaço para a torre à direita)
-    const ux = 40, uw = 400, uy = 40, uh = 108, n = 4, gap = 3;
-    const dw = (uw - gap * (n - 1)) / n;
-    for (let i = 0; i < n; i++) door(upper, ux + i * (dw + gap), uy, dw, uh, { handle: 'bottom', vertical: false });
+  const ambientesSVG = {
+    cozinha(g) {
+      // aéreos
+      const gap = 3, dw = (400 - gap * 3) / 4;
+      for (let i = 0; i < 4; i++) door(g, 40 + i * (dw + gap), 40, dw, 108, { handle: 'bottom' });
+      // revestimento + LED sob os aéreos
+      rect(g, { x: 40, y: 150, width: 403, height: 95, fill: '#2a2622' });
+      luz(g, 40, 150, 403, 70);
+      // bancada (termina antes da torre)
+      slab(g, 34, 245, 409, 14);
+      plantinha(g, 339, 245);
+      // gaveteiro + portas
+      [0, 1, 2].forEach(k => door(g, 40, 262 + k * 36.7, 110, 34, { handle: 'top' }));
+      const px = 153, pdw = (440 - px - gap * 2) / 3;
+      for (let i = 0; i < 3; i++) door(g, px + i * (pdw + gap), 262, pdw, 108, { handle: 'top' });
+      rect(g, { x: 40, y: 368, width: 400, height: 4, fill: '#000', 'fill-opacity': .5 });
+      // torre quente
+      const tx = 446, tw = 114, ty = 40;
+      rect(g, { x: tx, y: ty, width: tw, height: 330, fill: '#000', 'fill-opacity': .25 });
+      door(g, tx, ty, tw, 92, { handle: 'bottom' });
+      rect(g, { x: tx + 4, y: ty + 96, width: tw - 8, height: 58, rx: 3, fill: '#111' });
+      rect(g, { x: tx + 10, y: ty + 102, width: tw - 40, height: 46, rx: 2, fill: '#262626' });
+      g.appendChild(el('circle', { cx: tx + tw - 17, cy: ty + 114, r: 4, fill: '#555' }));
+      rect(g, { x: tx + 4, y: ty + 158, width: tw - 8, height: 72, rx: 3, fill: '#111' });
+      rect(g, { x: tx + 12, y: ty + 172, width: tw - 24, height: 50, rx: 2, fill: '#2b2017' });
+      rect(g, { x: tx + 20, y: ty + 164, width: tw - 40, height: 3, rx: 1.5, fill: '#888' });
+      door(g, tx, ty + 234, tw, 96, { handle: 'top' });
+    },
 
-    // bancada
-    $('#counter').setAttribute('fill', estudio.bancada.cor);
+    quarto(g) {
+      // guarda-roupa com maleiro
+      const gap = 3, dw = (250 - gap * 2) / 3;
+      for (let i = 0; i < 3; i++) door(g, 30 + i * (dw + gap), 30, dw, 62, { handle: 'bottom' });
+      for (let i = 0; i < 3; i++) door(g, 30 + i * (dw + gap), 95, dw, 272, { vertical: true, side: i === 0 ? 'right' : 'left' });
+      rect(g, { x: 30, y: 367, width: 250, height: 5, fill: '#000', 'fill-opacity': .5 });
+      // cabeceira ripada com LED
+      painel(g, 300, 110, 270, 232);
+      ripado(g, 300, 110, 270, 232, 15);
+      luz(g, 300, 110, 270, 70);
+      // criados-mudos suspensos
+      [306, 512].forEach(x => {
+        slab(g, x - 2, 294, 56, 7);
+        door(g, x, 301, 52, 40, { handle: 'top' });
+      });
+      // abajur
+      rect(g, { x: 532, y: 280, width: 12, height: 14, fill: '#cbbfa9' });
+      g.appendChild(el('path', { d: 'M524 280 L552 280 L546 262 L530 262 Z', fill: '#efe5d2' }));
+      // cama
+      rect(g, { x: 364, y: 336, width: 142, height: 36, rx: 3, fill: '#2a2622' });
+      rect(g, { x: 366, y: 306, width: 138, height: 32, rx: 6, fill: '#ece6dc' });
+      rect(g, { x: 372, y: 290, width: 60, height: 20, rx: 8, fill: '#f6f2ea' });
+      rect(g, { x: 438, y: 290, width: 60, height: 20, rx: 8, fill: '#f6f2ea' });
+      rect(g, { x: 366, y: 318, width: 138, height: 24, rx: 5, fill: '#b9a48c' });
+    },
 
-    // inferiores: gavetões + portas
-    const ly = 262, lh = 108;
-    // gaveteiro (3 gavetas)
-    const gx = 40, gw = 110;
-    [0, 1, 2].forEach(k => door(lower, gx, ly + k * 36.7, gw, 34, { handle: 'top' }));
-    // portas
-    const px = gx + gw + gap, pw = 440 - px, pn = 3;
-    const pdw = (pw - gap * (pn - 1)) / pn;
-    for (let i = 0; i < pn; i++) door(lower, px + i * (pdw + gap), ly, pdw, lh, { handle: 'top' });
-    // rodapé
-    lower.appendChild(el('rect', { x: 40, y: 370, width: 400, height: 4, fill: '#000', 'fill-opacity': .5 }));
+    office(g) {
+      // estante com nichos iluminados
+      painel(g, 30, 30, 230, 342);
+      const nichos = [[40, 40, 101, 80], [149, 40, 101, 80], [40, 128, 101, 80], [149, 128, 101, 80], [40, 216, 210, 66]];
+      nichos.forEach(([x, y, w, h], k) => {
+        rect(g, { x, y, width: w, height: h, fill: '#1a1714' });
+        luz(g, x, y, w, 34);
+        if (k === 3) plantinha(g, x + w / 2, y + h);
+        else livros(g, x + 6, y + h, k === 4 ? 120 : w - 12);
+      });
+      door(g, 38, 290, 105, 76, { handle: 'top' });
+      door(g, 147, 290, 105, 76, { handle: 'top' });
+      // prateleira com LED
+      painel(g, 300, 112, 260, 10);
+      luz(g, 300, 122, 260, 60);
+      livros(g, 312, 112, 70);
+      plantinha(g, 520, 112);
+      // monitor
+      rect(g, { x: 360, y: 172, width: 110, height: 66, rx: 3, fill: '#111' });
+      rect(g, { x: 364, y: 176, width: 102, height: 58, fill: '#26303b' });
+      rect(g, { x: 410, y: 238, width: 10, height: 12, fill: '#222' });
+      rect(g, { x: 396, y: 247, width: 38, height: 3, rx: 1.5, fill: '#222' });
+      // mesa: tampo, pé painel e gaveteiro
+      slab(g, 288, 250, 282, 12);
+      painel(g, 292, 262, 14, 110);
+      [0, 1, 2].forEach(k => door(g, 470, 264 + k * 36, 96, 34, { handle: 'top' }));
+    },
 
-    // torre quente
-    const tx = 446, tw = 114, ty = 40, th = 330;
-    tower.appendChild(el('rect', { x: tx, y: ty, width: tw, height: th, fill: '#000', 'fill-opacity': .25 }));
-    door(tower, tx, ty, tw, 92, { handle: 'bottom', vertical: false });
-    // micro-ondas e forno
-    tower.appendChild(el('rect', { x: tx + 4, y: ty + 96, width: tw - 8, height: 58, rx: 3, fill: '#111' }));
-    tower.appendChild(el('rect', { x: tx + 10, y: ty + 102, width: tw - 40, height: 46, rx: 2, fill: '#262626' }));
-    tower.appendChild(el('circle', { cx: tx + tw - 17, cy: ty + 114, r: 4, fill: '#555' }));
-    tower.appendChild(el('rect', { x: tx + 4, y: ty + 158, width: tw - 8, height: 72, rx: 3, fill: '#111' }));
-    tower.appendChild(el('rect', { x: tx + 12, y: ty + 172, width: tw - 24, height: 50, rx: 2, fill: '#2b2017' }));
-    tower.appendChild(el('rect', { x: tx + 20, y: ty + 164, width: tw - 40, height: 3, rx: 1.5, fill: '#888' }));
-    door(tower, tx, ty + 234, tw, 96, { handle: 'top', vertical: false });
+    banho(g) {
+      // revestimento
+      rect(g, { x: 120, y: 40, width: 360, height: 332, fill: '#25211d' });
+      // espelho com LED atrás
+      const led = el('rect', { x: 182, y: 62, width: 236, height: 166, rx: 12, fill: 'none', stroke: '#ffd89a', 'stroke-width': 12, 'stroke-opacity': .35, class: 'led' + (estudio.led ? '' : ' off') });
+      g.appendChild(led);
+      rect(g, { x: 190, y: 70, width: 220, height: 150, rx: 6, fill: '#3a4148' });
+      g.appendChild(el('path', { d: 'M215 205 L285 85 M245 205 L300 110', stroke: '#fff', 'stroke-opacity': .12, 'stroke-width': 6 }));
+      // bancada, cuba e torneira
+      slab(g, 150, 246, 300, 12);
+      rect(g, { x: 255, y: 228, width: 90, height: 18, rx: 8, fill: '#f4f1ec' });
+      g.appendChild(el('path', { d: 'M318 228 L318 206 Q318 200 312 200 L300 200', stroke: '#bdbdbd', 'stroke-width': 3, fill: 'none' }));
+      // gabinete suspenso com LED de piso
+      door(g, 156, 258, 142.5, 72, { handle: 'top' });
+      door(g, 301.5, 258, 142.5, 72, { handle: 'top' });
+      luz(g, 156, 330, 288, 42);
+      // torre lateral
+      door(g, 480, 60, 70, 300, { vertical: true, side: 'left' });
+      // toalha
+      rect(g, { x: 60, y: 150, width: 40, height: 4, rx: 2, fill: '#999' });
+      rect(g, { x: 62, y: 152, width: 36, height: 70, rx: 3, fill: '#d8cfc1' });
+    },
 
-    // vaso decorativo na bancada
-    lower.appendChild(el('rect', { x: 330, y: 222, width: 18, height: 23, rx: 4, fill: '#d9d2c4' }));
-    lower.appendChild(el('path', { d: 'M339 222 C 333 205, 326 200, 322 192 M339 222 C 343 204, 352 198, 356 190 M339 222 C 339 206, 339 198, 340 186', stroke: '#7d8f6a', 'stroke-width': 2, fill: 'none' }));
+    sala(g) {
+      // painel ripado com LED
+      painel(g, 160, 30, 280, 342);
+      ripado(g, 160, 30, 280, 342, 12);
+      luz(g, 160, 30, 280, 80);
+      // TV
+      rect(g, { x: 200, y: 110, width: 200, height: 115, rx: 3, fill: '#0b0b0b' });
+      rect(g, { x: 204, y: 114, width: 192, height: 107, fill: '#151a20' });
+      // rack suspenso
+      slab(g, 110, 262, 380, 8);
+      const gap = 3, dw = (376 - gap * 3) / 4;
+      for (let i = 0; i < 4; i++) door(g, 112 + i * (dw + gap), 270, dw, 52, { handle: 'top' });
+      luz(g, 112, 322, 376, 46);
+      // nichos laterais
+      rect(g, { x: 34, y: 60, width: 96, height: 190, fill: '#1a1714' });
+      [60, 123, 186, 250].forEach(y => painel(g, 30, y - 4, 104, 6));
+      livros(g, 42, 120, 50);
+      plantinha(g, 82, 182);
+      livros(g, 40, 244, 70);
+      // vaso de chão
+      rect(g, { x: 510, y: 330, width: 34, height: 42, rx: 6, fill: '#d9d2c4' });
+      g.appendChild(el('path', { d: 'M527 330 C 515 300, 500 290, 492 276 M527 330 C 532 296, 545 284, 556 270 M527 330 C 526 300, 528 284, 530 262', stroke: '#7d8f6a', 'stroke-width': 3, fill: 'none' }));
+    }
+  };
+
+  function draw() {
+    const g = $('#scene');
+    g.replaceChildren();
+    rect(g, { x: 0, y: 0, width: 600, height: 440, fill: '#1c1916' });
+    rect(g, { x: 0, y: 372, width: 600, height: 68, fill: '#141210' });
+    ambientesSVG[estudio.ambiente](g);
+    $('#kitchen').setAttribute('aria-label', `Prévia de ${salas[estudio.ambiente].nome.toLowerCase()} planejado(a) com os acabamentos escolhidos`);
   }
-  drawKitchen();
+  draw();
 
   /* ---------- Linha do tempo ---------- */
   const steps = $$('#timeline .step');
@@ -426,7 +569,7 @@
   };
   $('#ambCta').addEventListener('click', e => marcarAmb(e.currentTarget.dataset.amb));
   let usarEstudio = false;
-  $('#studioCta').addEventListener('click', () => { usarEstudio = true; marcarAmb('Cozinha'); updatePreview(); });
+  $('#studioCta').addEventListener('click', () => { usarEstudio = true; marcarAmb(salas[estudio.ambiente].wizard); updatePreview(); });
 
   let step = 1;
   const total = 3;
@@ -444,7 +587,7 @@
     if (valorUnico('imovel')) linhas.push(`Imóvel: ${valorUnico('imovel')}`);
     if (valorUnico('momento')) linhas.push(`Momento: ${valorUnico('momento')}`);
     if (cidade) linhas.push(`Local: ${cidade}`);
-    if (usarEstudio) linhas.push(`Acabamentos que gostei: portas ${estudio.porta.nome}, bancada ${estudio.bancada.nome}, puxador ${puxadorNomes[estudio.puxador].toLowerCase()}${estudio.led ? ', com LED' : ''}`);
+    if (usarEstudio) linhas.push(`Simulei no site (${salas[estudio.ambiente].nome}): portas ${estudio.porta.nome}, ${salas[estudio.ambiente].tampo.toLowerCase()} ${estudio.bancada.nome},puxador ${puxadorNomes[estudio.puxador].toLowerCase()}${estudio.led ? ', com LED' : ''}`);
     if (favoritos.size) linhas.push(`Projetos do site que gostei: ${[...favoritos].join(', ')}`);
     if (extra) linhas.push('', extra);
     return linhas.join('\n');

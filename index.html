@@ -133,14 +133,25 @@
     <div class="estudio-copy">
       <p class="eyebrow reveal">Estúdio de acabamentos</p>
       <h2 class="reveal">Brinque com o seu <em>próximo ambiente</em></h2>
-      <p class="reveal muted">Escolha o padrão das portas, a bancada, os puxadores e a iluminação. É assim que começamos a conversa: entendendo o seu gosto.</p>
+      <p class="reveal muted">Escolha o ambiente, o padrão das portas, o tampo, os puxadores e a iluminação. É assim que começamos a conversa: entendendo o seu gosto.</p>
+
+      <div class="opt reveal">
+        <p class="opt-label">Ambiente <span id="lblRoom">Cozinha</span></p>
+        <div class="room-pick" id="segRoom">
+          <button type="button" class="chip active" data-v="cozinha">Cozinha</button>
+          <button type="button" class="chip" data-v="quarto">Quarto</button>
+          <button type="button" class="chip" data-v="office">Home office</button>
+          <button type="button" class="chip" data-v="banho">Banheiro</button>
+          <button type="button" class="chip" data-v="sala">Sala de TV</button>
+        </div>
+      </div>
 
       <div class="opt reveal">
         <p class="opt-label">Portas <span id="lblDoor">Freijó</span></p>
         <div class="swatches" id="swDoor"></div>
       </div>
       <div class="opt reveal">
-        <p class="opt-label">Bancada <span id="lblTop">Quartzo branco</span></p>
+        <p class="opt-label"><b id="lblTopName">Bancada</b> <span id="lblTop">Quartzo branco</span></p>
         <div class="swatches" id="swTop"></div>
       </div>
       <div class="opt reveal">
@@ -158,7 +169,7 @@
     </div>
 
     <div class="estudio-stage reveal">
-      <svg viewBox="0 0 600 440" id="kitchen" role="img" aria-label="Prévia de cozinha planejada com os acabamentos escolhidos">
+      <svg viewBox="0 0 600 440" id="kitchen" role="img" aria-label="Prévia do ambiente planejado com os acabamentos escolhidos">
         <defs>
           <pattern id="grain" width="60" height="200" patternUnits="userSpaceOnUse">
             <path d="M5 0 C 12 50, 0 120, 8 200 M22 0 C 28 70, 16 140, 24 200 M38 0 C 44 40, 34 110, 42 200 M52 0 C 58 80, 48 150, 55 200" stroke="#000" stroke-opacity=".13" fill="none" stroke-width="1.2"/>
@@ -172,20 +183,8 @@
             <stop offset="1" stop-color="#000" stop-opacity=".12"/>
           </linearGradient>
         </defs>
-        <!-- parede -->
-        <rect x="0" y="0" width="600" height="440" fill="#1c1916"/>
-        <rect x="0" y="372" width="600" height="68" fill="#141210"/>
-        <!-- armários superiores -->
-        <g id="upper"></g>
-        <!-- LED + revestimento -->
-        <rect x="40" y="150" width="520" height="95" fill="#2a2622" id="backsplash"/>
-        <rect x="40" y="150" width="520" height="70" fill="url(#ledGlow)" id="led" class="led"/>
-        <!-- bancada -->
-        <rect x="30" y="245" width="540" height="14" rx="2" id="counter"/>
-        <!-- armários inferiores -->
-        <g id="lower"></g>
-        <!-- torre -->
-        <g id="tower"></g>
+        <!-- desenhado pelo script.js conforme o ambiente escolhido -->
+        <g id="scene"></g>
       </svg>
       <p class="stage-note">Ilustração para referência. O projeto real é feito em 3D com as medidas do seu espaço.</p>
     </div>

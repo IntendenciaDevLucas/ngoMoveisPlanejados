@@ -316,3 +316,9 @@ legend.sub{font-size:1.4rem;margin-top:30px}
 @keyframes favPop{40%{transform:scale(1.35)}100%{transform:scale(1)}}
 .fav-note{text-align:center;color:var(--muted);font-size:.9rem;margin:-30px 0 34px}
 .fav-note a{color:var(--gold-2);border-bottom:1px solid var(--gold)}
+
+/* Estúdio: escolha do ambiente */
+.room-pick{display:flex;flex-wrap:wrap;gap:8px}
+.opt-label b{font-weight:inherit}
+#kitchen{transition:opacity .25s}
+#kitchen.swap{opacity:0}
