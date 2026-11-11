@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NGO Móveis Planejados | Marcenaria sob medida</title>
+<meta name="description" content="NGO Móveis Planejados: móveis sob medida para sala, cozinha, quarto, closet, banheiro, home theater e área externa. Do projeto à montagem.">
+<link rel="icon" href="fotos/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Cabeçalho -->
+<header class="nav" id="nav">
+  <a href="#inicio" class="brand" aria-label="NGO Móveis Planejados, início">
+    <img src="fotos/logo.png" alt="" width="40" height="40">
+    <span><strong>NGO</strong> Móveis Planejados</span>
+  </a>
+  <nav class="nav-links" id="navLinks">
+    <a href="#ambientes">Ambientes</a>
+    <a href="#portfolio">Projetos</a>
+    <a href="#estudio">Monte o seu</a>
+    <a href="#processo">Como trabalhamos</a>
+    <a href="#duvidas">Dúvidas</a>
+    <a href="#orcamento" class="btn btn-gold btn-sm">Pedir orçamento</a>
+  </nav>
+  <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="inicio">
+  <div class="hero-slides" aria-hidden="true">
+    <div class="slide active" style="background-image:url(fotos/home-theater.jpg)"></div>
+    <div class="slide" style="background-image:url(fotos/biblioteca-home-office.jpg)"></div>
+    <div class="slide" style="background-image:url(fotos/cozinha-integrada.jpg)"></div>
+    <div class="slide" style="background-image:url(fotos/lavabo.jpg)"></div>
+  </div>
+  <div class="hero-glow" id="heroGlow"></div>
+  <div class="hero-content">
+    <p class="eyebrow reveal">Marcenaria sob medida · Minas Gerais</p>
+    <h1 class="reveal">Cada centímetro<br><em>pensado para você.</em></h1>
+    <p class="lead reveal">Móveis planejados que unem design, acabamento impecável e o jeito como você vive. Do primeiro rascunho à última dobradiça.</p>
+    <div class="hero-cta reveal">
+      <a href="#orcamento" class="btn btn-gold">Quero meu projeto</a>
+      <a href="#portfolio" class="btn btn-ghost">Ver projetos</a>
+    </div>
+  </div>
+  <div class="hero-dots" id="heroDots"></div>
+  <a href="#manifesto" class="scroll-hint" aria-label="Rolar para baixo"><span></span></a>
+</section>
+
+<!-- Manifesto + diferenciais -->
+<section class="manifesto" id="manifesto">
+  <div class="wrap">
+    <p class="big-quote reveal">Não vendemos móveis prontos. Criamos <em>ambientes</em> que cabem exatamente no seu espaço, na sua rotina e no seu estilo.</p>
+    <div class="pillars">
+      <div class="pillar reveal">
+        <span class="pillar-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg></span>
+        <h3>100% sob medida</h3>
+        <p>Medição no local e projeto feito para o seu imóvel, sem módulos padrão nem espaço desperdiçado.</p>
+      </div>
+      <div class="pillar reveal">
+        <span class="pillar-icon"><svg viewBox="0 0 24 24"><path d="M12 2l9 5v10l-9 5-9-5V7z M12 22V12 M21 7l-9 5-9-5"/></svg></span>
+        <h3>Projeto em 3D</h3>
+        <p>Você vê o ambiente pronto antes da produção e ajusta cores, puxadores e iluminação com a gente.</p>
+      </div>
+      <div class="pillar reveal">
+        <span class="pillar-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></span>
+        <h3>Acabamento de alto padrão</h3>
+        <p>Ferragens de qualidade, fitas de borda bem aplicadas, LED embutido e encaixes precisos.</p>
+      </div>
+      <div class="pillar reveal">
+        <span class="pillar-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></span>
+        <h3>Atendimento próximo</h3>
+        <p>Consultores técnicos acompanham cada etapa e trabalham lado a lado com o seu arquiteto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ambientes (abas interativas) -->
+<section class="ambientes" id="ambientes">
+  <div class="wrap">
+    <header class="section-head reveal">
+      <p class="eyebrow">O que fazemos</p>
+      <h2>Um projeto para <em>cada ambiente</em></h2>
+    </header>
+    <div class="tabs reveal" role="tablist" id="ambTabs"></div>
+    <div class="amb-panel" id="ambPanel">
+      <div class="amb-img"><img id="ambImg" src="fotos/home-theater.jpg" alt=""></div>
+      <div class="amb-text">
+        <span class="amb-num" id="ambNum">01</span>
+        <h3 id="ambTitle"></h3>
+        <p id="ambDesc"></p>
+        <ul id="ambList" class="checklist"></ul>
+        <a href="#orcamento" class="btn btn-line" id="ambCta">Planejar este ambiente</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Portfólio -->
+<section class="portfolio" id="portfolio">
+  <div class="wrap">
+    <header class="section-head reveal">
+      <p class="eyebrow">Portfólio</p>
+      <h2>Projetos que <em>já saíram da nossa marcenaria</em></h2>
+    </header>
+    <div class="filters reveal" id="filters">
+      <button class="chip active" data-f="todos">Todos</button>
+      <button class="chip" data-f="social">Sala & Home</button>
+      <button class="chip" data-f="cozinha">Cozinha</button>
+      <button class="chip" data-f="banho">Banheiro</button>
+      <button class="chip" data-f="trabalho">Escritório</button>
+      <button class="chip" data-f="externo">Área externa</button>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="center reveal">
+      <a href="https://www.instagram.com/ngomoveisplanejados/" target="_blank" rel="noopener" class="btn btn-line">
+        <svg viewBox="0 0 24 24" class="ico"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        Mais projetos no Instagram
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Estúdio de acabamentos (configurador) -->
+<section class="estudio" id="estudio">
+  <div class="wrap estudio-grid">
+    <div class="estudio-copy">
+      <p class="eyebrow reveal">Estúdio de acabamentos</p>
+      <h2 class="reveal">Brinque com o seu <em>próximo ambiente</em></h2>
+      <p class="reveal muted">Escolha o padrão das portas, a bancada, os puxadores e a iluminação. É assim que começamos a conversa: entendendo o seu gosto.</p>
+
+      <div class="opt reveal">
+        <p class="opt-label">Portas <span id="lblDoor">Freijó</span></p>
+        <div class="swatches" id="swDoor"></div>
+      </div>
+      <div class="opt reveal">
+        <p class="opt-label">Bancada <span id="lblTop">Quartzo branco</span></p>
+        <div class="swatches" id="swTop"></div>
+      </div>
+      <div class="opt reveal">
+        <p class="opt-label">Puxador <span id="lblHandle">Perfil preto</span></p>
+        <div class="seg" id="segHandle">
+          <button data-v="preto" class="on">Perfil preto</button>
+          <button data-v="dourado">Dourado</button>
+          <button data-v="cava">Cava (sem puxador)</button>
+        </div>
+      </div>
+      <div class="opt reveal">
+        <label class="switch"><input type="checkbox" id="ledToggle" checked><span class="track"></span> Iluminação em LED</label>
+      </div>
+      <a href="#orcamento" class="btn btn-gold reveal" id="studioCta">Quero algo assim</a>
+    </div>
+
+    <div class="estudio-stage reveal">
+      <svg viewBox="0 0 600 440" id="kitchen" role="img" aria-label="Prévia de cozinha planejada com os acabamentos escolhidos">
+        <defs>
+          <pattern id="grain" width="60" height="200" patternUnits="userSpaceOnUse">
+            <path d="M5 0 C 12 50, 0 120, 8 200 M22 0 C 28 70, 16 140, 24 200 M38 0 C 44 40, 34 110, 42 200 M52 0 C 58 80, 48 150, 55 200" stroke="#000" stroke-opacity=".13" fill="none" stroke-width="1.2"/>
+          </pattern>
+          <linearGradient id="ledGlow" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffd89a" stop-opacity=".85"/>
+            <stop offset="1" stop-color="#ffd89a" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="shade" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#fff" stop-opacity=".10"/>
+            <stop offset="1" stop-color="#000" stop-opacity=".12"/>
+          </linearGradient>
+        </defs>
+        <!-- parede -->
+        <rect x="0" y="0" width="600" height="440" fill="#1c1916"/>
+        <rect x="0" y="372" width="600" height="68" fill="#141210"/>
+        <!-- armários superiores -->
+        <g id="upper"></g>
+        <!-- LED + revestimento -->
+        <rect x="40" y="150" width="520" height="95" fill="#2a2622" id="backsplash"/>
+        <rect x="40" y="150" width="520" height="70" fill="url(#ledGlow)" id="led" class="led"/>
+        <!-- bancada -->
+        <rect x="30" y="245" width="540" height="14" rx="2" id="counter"/>
+        <!-- armários inferiores -->
+        <g id="lower"></g>
+        <!-- torre -->
+        <g id="tower"></g>
+      </svg>
+      <p class="stage-note">Ilustração para referência. O projeto real é feito em 3D com as medidas do seu espaço.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Processo -->
+<section class="processo" id="processo">
+  <div class="wrap">
+    <header class="section-head reveal">
+      <p class="eyebrow">Como trabalhamos</p>
+      <h2>Do sonho à <em>montagem final</em></h2>
+    </header>
+    <ol class="timeline" id="timeline">
+      <li class="step reveal"><span class="step-n">01</span><div><h3>Conversa inicial</h3><p>Entendemos como você usa o espaço, o que incomoda hoje e o estilo que você ama.</p></div></li>
+      <li class="step reveal"><span class="step-n">02</span><div><h3>Medição técnica</h3><p>Nosso consultor vai até o imóvel e mede cada parede, tomada e ponto hidráulico.</p></div></li>
+      <li class="step reveal"><span class="step-n">03</span><div><h3>Projeto 3D e orçamento</h3><p>Você visualiza o ambiente, escolhe acabamentos e recebe um orçamento claro e detalhado.</p></div></li>
+      <li class="step reveal"><span class="step-n">04</span><div><h3>Produção</h3><p>Cortes precisos, fitas de borda e ferragens de qualidade, com conferência peça a peça.</p></div></li>
+      <li class="step reveal"><span class="step-n">05</span><div><h3>Montagem e entrega</h3><p>Equipe própria instala, regula portas e gavetas e entrega o ambiente limpo e pronto para usar.</p></div></li>
+    </ol>
+    <div class="timeline-progress" aria-hidden="true"><span id="tlBar"></span></div>
+  </div>
+</section>
+
+<!-- Faixa de frase -->
+<section class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Cozinhas</span><i>✦</i><span>Closets</span><i>✦</i><span>Home theater</span><i>✦</i><span>Painéis de TV</span><i>✦</i><span>Banheiros</span><i>✦</i><span>Home office</span><i>✦</i><span>Cabeceiras</span><i>✦</i><span>Área de serviço</span><i>✦</i>
+    <span>Cozinhas</span><i>✦</i><span>Closets</span><i>✦</i><span>Home theater</span><i>✦</i><span>Painéis de TV</span><i>✦</i><span>Banheiros</span><i>✦</i><span>Home office</span><i>✦</i><span>Cabeceiras</span><i>✦</i><span>Área de serviço</span><i>✦</i>
+  </div>
+</section>
+
+<!-- Orçamento (assistente) -->
+<section class="orcamento" id="orcamento">
+  <div class="wrap orc-grid">
+    <div class="orc-copy">
+      <p class="eyebrow reveal">Orçamento sem compromisso</p>
+      <h2 class="reveal">Vamos planejar <em>o seu espaço?</em></h2>
+      <p class="muted reveal">Responda 3 perguntas rápidas. A gente monta a mensagem e você envia direto no nosso WhatsApp.</p>
+      <div class="consultores reveal">
+        <p class="opt-label">Consultores técnicos</p>
+        <div class="consultor"><span class="avatar">G</span><div><strong>Gabriel Oliveira</strong><small>Consultor técnico</small></div></div>
+        <div class="consultor"><span class="avatar">N</span><div><strong>Nilson Oliveira</strong><small>Consultor técnico</small></div></div>
+        <a class="phone" href="https://wa.me/553173646406" target="_blank" rel="noopener">+55 (31) 97364-6406</a>
+      </div>
+    </div>
+
+    <form class="wizard reveal" id="wizard" novalidate>
+      <div class="wz-progress"><span id="wzBar"></span></div>
+      <p class="wz-count"><span id="wzStep">1</span> de 3</p>
+
+      <fieldset class="wz-step active" data-step="1">
+        <legend>Quais ambientes você quer planejar?</legend>
+        <div class="pick" id="pickAmb"></div>
+      </fieldset>
+
+      <fieldset class="wz-step" data-step="2">
+        <legend>Sobre o imóvel</legend>
+        <div class="pick single" data-name="imovel">
+          <button type="button" data-v="Apartamento">Apartamento</button>
+          <button type="button" data-v="Casa">Casa</button>
+          <button type="button" data-v="Espaço comercial">Comercial</button>
+        </div>
+        <legend class="sub">E o momento da obra?</legend>
+        <div class="pick single" data-name="momento">
+          <button type="button" data-v="Imóvel na planta / em obra">Na planta / em obra</button>
+          <button type="button" data-v="Pronto para receber os móveis">Pronto para os móveis</button>
+          <button type="button" data-v="Reformando um ambiente">Reformando</button>
+        </div>
+      </fieldset>
+
+      <fieldset class="wz-step" data-step="3">
+        <legend>Como podemos te chamar?</legend>
+        <label class="field"><span>Seu nome</span><input type="text" id="fName" autocomplete="name" placeholder="Ex.: Mariana"></label>
+        <label class="field"><span>Bairro / cidade</span><input type="text" id="fCity" placeholder="Ex.: Savassi, Belo Horizonte"></label>
+        <label class="field"><span>Algum detalhe? (opcional)</span><textarea id="fMsg" rows="3" placeholder="Ex.: tenho projeto de arquiteto, quero LED no painel..."></textarea></label>
+        <div class="preview" id="preview"></div>
+      </fieldset>
+
+      <p class="wz-error" id="wzError" role="alert"></p>
+      <div class="wz-nav">
+        <button type="button" class="btn btn-ghost" id="wzBack">Voltar</button>
+        <button type="button" class="btn btn-gold" id="wzNext">Continuar</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- Dúvidas & dicas -->
+<section class="duvidas" id="duvidas">
+  <div class="wrap narrow">
+    <header class="section-head reveal">
+      <p class="eyebrow">Dúvidas & dicas</p>
+      <h2>Perguntas <em>que sempre recebemos</em></h2>
+    </header>
+    <div class="faq">
+      <details class="reveal"><summary>Qual a diferença entre móvel planejado e móvel modulado?</summary><p>O modulado vem em tamanhos fixos de fábrica e precisa “se encaixar” no seu espaço. O planejado é desenhado e produzido sob medida, aproveitando cada canto, altura e recuo, com acabamentos escolhidos por você.</p></details>
+      <details class="reveal"><summary>Vocês trabalham com o projeto do meu arquiteto?</summary><p>Sim. Trabalhamos lado a lado com arquitetos e designers de interiores: seguimos o projeto, sugerimos ajustes técnicos e garantimos que o resultado saia como foi pensado.</p></details>
+      <details class="reveal"><summary>Quanto tempo leva do projeto à montagem?</summary><p>Depende do tamanho e da quantidade de ambientes. No orçamento você recebe o prazo de produção e montagem já definido para o seu projeto.</p></details>
+      <details class="reveal"><summary>Qual o melhor momento para chamar a marcenaria?</summary><p><strong>Dica:</strong> o quanto antes! Chamar ainda na fase de obra permite alinhar pontos elétricos, hidráulicos e de iluminação com os móveis, evitando quebrar parede depois.</p></details>
+      <details class="reveal"><summary>Dá para colocar iluminação de LED nos móveis?</summary><p>Dá, e transforma o ambiente. Usamos perfis embutidos em prateleiras, nichos, painéis de TV, closets e armários de cozinha, com acionamento por interruptor ou sensor.</p></details>
+      <details class="reveal"><summary>Como devo limpar e conservar meus móveis?</summary><p><strong>Dica:</strong> use pano macio levemente úmido e sabão neutro. Evite álcool, produtos abrasivos e excesso de água nas bordas. Regular dobradiças de vez em quando mantém as portas alinhadas.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA final -->
+<section class="final-cta">
+  <div class="final-bg" style="background-image:url(fotos/biblioteca-home-office.jpg)"></div>
+  <div class="wrap center">
+    <h2 class="reveal">Seu espaço merece ser <em>único.</em></h2>
+    <p class="reveal lead">Fale com um consultor e receba seu projeto.</p>
+    <a class="btn btn-gold reveal" href="https://wa.me/553173646406?text=Ol%C3%A1!%20Vi%20o%20site%20da%20NGO%20e%20gostaria%20de%20um%20or%C3%A7amento." target="_blank" rel="noopener">Conversar no WhatsApp</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a href="#inicio" class="brand"><img src="fotos/logo.png" alt="" width="40" height="40"><span><strong>NGO</strong> Móveis Planejados</span></a>
+      <p class="muted small">Marcenaria sob medida com design, precisão e cuidado em cada detalhe.</p>
+    </div>
+    <div>
+      <p class="opt-label">Contato</p>
+      <a href="https://wa.me/553173646406" target="_blank" rel="noopener">WhatsApp +55 (31) 97364-6406</a>
+      <a href="https://www.instagram.com/ngomoveisplanejados/" target="_blank" rel="noopener">@ngomoveisplanejados</a>
+    </div>
+    <div>
+      <p class="opt-label">Navegue</p>
+      <a href="#ambientes">Ambientes</a>
+      <a href="#portfolio">Projetos</a>
+      <a href="#orcamento">Orçamento</a>
+    </div>
+  </div>
+  <p class="copy">© <span id="year"></span> NGO Móveis Planejados. Todos os direitos reservados.</p>
+</footer>
+
+<!-- WhatsApp flutuante -->
+<a class="wa-float" href="https://wa.me/553173646406" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 32 32"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.7a10.7 10.7 0 0 1-5.5-1.5l-.4-.2-3.9 1 1-3.8-.2-.4A10.7 10.7 0 1 1 16 26.7zm5.9-8c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1a8.8 8.8 0 0 1-4.4-3.8c-.3-.6.3-.5 1-1.8.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4 3.6 3.6 0 0 0-1.1 2.7 6.3 6.3 0 0 0 1.3 3.3 14.4 14.4 0 0 0 5.5 4.9c2 .9 2.8 1 3.9.8a3.3 3.3 0 0 0 2.1-1.5 2.7 2.7 0 0 0 .2-1.5c-.1-.2-.3-.3-.6-.4z"/></svg>
+</a>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lb-close" id="lbClose" aria-label="Fechar">×</button>
+  <button class="lb-nav prev" id="lbPrev" aria-label="Anterior">‹</button>
+  <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
+  <button class="lb-nav next" id="lbNext" aria-label="Próxima">›</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
